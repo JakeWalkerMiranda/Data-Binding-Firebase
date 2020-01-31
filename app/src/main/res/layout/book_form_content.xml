@@ -1,0 +1,146 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--Importação das classes modelo e referenciamento-->
+    <data>
+        <import type="java.util.List"/>
+        <import type="br.com.jwm.livros.model.MediaType"/>
+
+        <!--São declaradas três variáveis: book é objeto que representa o livro;
+         a view é o objeto que tratará os eventos que esse arquivo de layout
+         disparará, e que nesse exemplo é a própria activity (use o nome que
+         preferir); e publishers é a lista de editoras que será exibida no Spinner.-->
+
+        <variable
+            name="book"
+            type="br.com.jwm.livros.model.Book"/>
+        <variable
+            name="view"
+            type="br.com.jwm.livros.BookFormActivity" />
+        <variable
+            name="publishers"
+            type="java.util.List&lt;br.com.jwm.livros.model.Publisher&gt;"/>
+
+        <!--Perceba que essa última propriedade está utilizando &lt; e &gt; que
+        representam respectivamente < e >.-->
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!--A expressão @={}, (ao invez de @{}), indica um two way data binding
+         com a propriedade title do objeto book. Ou seja, quando o valor for
+         modificado na UI, o objeto será atualizado e vice-versa. O mesmo vale
+         para o restante do arquivo de layout.-->
+
+        <EditText
+            android:id="@+id/edtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_book_title"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:text="@={book.title}"/>
+
+        <EditText
+            android:id="@+id/edtAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_book_author"
+            android:imeOptions="actionNext"
+            android:inputType="textCapWords"
+            android:text="@={book.author}"/>
+
+        <EditText
+            android:id="@+id/edtPages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_book_pages"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:text="@={book.pages}"/>
+
+        <EditText
+            android:id="@+id/edtYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_book_year"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:text="@={book.year}"/>
+
+        <!--A propriedade android:entries está sendo utilizada para definir os
+         itens que serão exibidos na lista, que nesse exemplo é a propriedade
+         publishers definida no início do arquivo. Na propriedade
+         android:onItemSelected instrução lambda está sendo usada para definir
+         o evento que será chamado ao selecionar um item da lista. Nesse exemplo
+         está sendo invocado o método setPublisher(Publisher) do objeto book.-->
+
+        <Spinner
+            android:id="@+id/spnPublisher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@{publishers}"
+            android:onItemSelected="@{(p, v, pos, id)->book.setPublisher(publishers[pos])}"
+            android:selection="@{publishers.indexOf(book.publisher)}"/>
+
+        <CheckBox
+            android:id="@+id/chkAvailable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={book.available}"
+            android:text="@string/text_book_available"/>
+
+        <RadioGroup
+            android:id="@+id/rgMediaType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbMediaPaper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{book.mediaType == MediaType.PAPER}"
+                android:onCheckedChanged="@{view::onMediaTypeChanged}"
+                android:text="@string/text_book_media_paper"/>
+
+            <RadioButton
+                android:id="@+id/rbMediaEbook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{book.mediaType == MediaType.EBOOK}"
+                android:onCheckedChanged="@{view::onMediaTypeChanged}"
+                android:text="@string/text_book_media_ebook"/>
+
+        </RadioGroup>
+
+        <RatingBar
+            android:id="@+id/rtbRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:progressTint="@color/colorAccent"
+            android:rating="@={book.rating}"/>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{view::clickSaveBook}"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</layout>
