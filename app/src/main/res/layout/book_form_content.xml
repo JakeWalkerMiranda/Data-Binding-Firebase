@@ -132,7 +132,8 @@
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{view::clickSaveBook}"/>
+            android:onClick="@{view::clickSaveBook}"
+            android:text="@string/button_save"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

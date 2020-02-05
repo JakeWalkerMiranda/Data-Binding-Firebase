@@ -13,7 +13,7 @@ class BooksListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Testando para ver se está tudo funcionando
-        BookDetailsActivity.start(this,
+        BookFormActivity.start(this,
             Book().apply {
                 id = "1"
                 title = "Dominando o Android com Kotlin"

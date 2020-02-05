@@ -1,7 +1,7 @@
 package br.com.jwm.livros.model
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import br.com.jwm.livros.BR
+import androidx.databinding.library.baseAdapters.BR
 import org.parceler.Parcel
 
 /*Classe modelo do objeto Book (Livro). Livro possui publicação e tipo, que são

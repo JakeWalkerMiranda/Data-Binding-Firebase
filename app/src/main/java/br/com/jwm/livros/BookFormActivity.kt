@@ -2,18 +2,17 @@ package br.com.jwm.livros
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.widget.CompoundButton
-import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import br.com.jwm.livros.databinding.ActivityBookFormBinding
 import br.com.jwm.livros.model.Book
 import br.com.jwm.livros.model.MediaType
 import br.com.jwm.livros.model.Publisher
+import kotlinx.android.synthetic.main.book_form_content.view.*
 import org.parceler.Parcels
 
 class BookFormActivity : AppCompatActivity() {
