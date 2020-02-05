@@ -2,18 +2,25 @@ package br.com.jwm.livros
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.jwm.livros.model.Book
 import br.com.jwm.livros.model.MediaType
 import br.com.jwm.livros.model.Publisher
+import kotlinx.android.synthetic.main.activity_book_list.*
 
 class BooksListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        //Referencia a Lista de livros
+        setContentView(R.layout.activity_book_list)
 
         //Testando para ver se está tudo funcionando
-        BookFormActivity.start(this,
+
+        //Criando a lista de livros que será passada ao adapter.
+
+        val books = listOf(
             Book().apply {
                 id = "1"
                 title = "Dominando o Android com Kotlin"
@@ -25,6 +32,17 @@ class BooksListActivity : AppCompatActivity() {
                 available = true
                 mediaType = MediaType.PAPER
                 rating = 5.0f
-            })
+            }
+        )
+
+
+        //Configuração do LayoutManager
+        rvBooks.layoutManager = LinearLayoutManager(this)
+
+        //Recebe a lista e utiliza o adapter para gerar a tela de detalhes
+        rvBooks.adapter = BookAdapter(books) { book ->
+            BookDetailsActivity.start(this, book)
+        }
+
     }
 }
